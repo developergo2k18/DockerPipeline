@@ -23,12 +23,12 @@ podTemplate(containers: [
     def dockerHubUser="developergo"
     def dockerHubPwd="Welcome@2022\$#"
     def httpPort="8090"
+    
+    environment {
+		dockerhub=credentials('dockerHubAccount')
+	}
 
     node(POD_LABEL) {
-        
-        environment {
-            dockerhub=credentials("dockerHubAccount")
-        }
         
         stage('Checkout SCM') {
             container('maven') {
@@ -49,9 +49,9 @@ podTemplate(containers: [
 
         stage('Push to Docker Registry'){
             container('docker') {
-                sh "docker login -u $dockerhub_USR -p $dockerhub_PSW"
-                sh "docker tag $containerName:$tag $dockerUser/$containerName:$tag"
-                sh "docker push $dockerUser/$containerName:$tag"
+                sh 'echo $dockerhub_PSW | docker login -u $dockerhub_USR --password-stdin'
+                sh "docker tag $containerName:$tag $dockerhub_USR/$containerName:$tag"
+                sh "docker push $dockerhub_USR/$containerName:$tag"
                 echo "Image push complete"
             }
         }
