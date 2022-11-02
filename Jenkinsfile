@@ -23,7 +23,6 @@ podTemplate(containers: [
     def dockerHubUser="developergo"
     def dockerHubPwd="Welcome@2022\$#"
     def httpPort="8090"
-    def dockerhub=credentials('dockerHubAccount')
 
     node(POD_LABEL) {
         
@@ -46,9 +45,9 @@ podTemplate(containers: [
 
         stage('Push to Docker Registry'){
             container('docker') {
-		sh "docker login -u $dockerhub_USR -p $dockerhub_PSW"
-                sh "docker tag $containerName:$tag $dockerhub_USR/$containerName:$tag"
-                sh "docker push $dockerhub_USR/$containerName:$tag"
+		sh "docker login -u $dockerHubUser -p $dockerHubPwd"
+                sh "docker tag $containerName:$tag $dockerHubUser/$containerName:$tag"
+                sh "docker push $dockerHubUser/$containerName:$tag"
                 echo "Image push complete"
             }
         }
