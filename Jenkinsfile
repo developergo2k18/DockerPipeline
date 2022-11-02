@@ -28,10 +28,8 @@ podTemplate(containers: [
         stage('Checkout SCM') {
             container('maven') {
                 checkout scm
-                def workspace = pwd()
-                ${workspace} will now contain an absolute path to job workspace on slave
                 stage('Build a Maven project') {
-                    sh "mvn clean package -f /home/jenkins/agent/workspace/deploykube/DockerPipeline/pom.xml"
+                    sh "mvn clean package -f /home/jenkins/agent/workspace/JavaApp1/DockerPipeline/pom.xml"
                 }
             }
         }
@@ -39,7 +37,7 @@ podTemplate(containers: [
         stage('Image Build') {
             container('docker') {
                 sh "docker system prune -f"
-                sh "docker build -t $containerName:$tag  -t $containerName --pull --no-cache ."
+                docker.build("$containerName:$tag","/home/jenkins/agent/workspace/JavaApp1/DockerPipeline")
                 echo "Image build complete"
             }
         }
