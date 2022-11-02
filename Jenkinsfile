@@ -23,10 +23,7 @@ podTemplate(containers: [
     def dockerHubUser="developergo"
     def dockerHubPwd="Welcome@2022\$#"
     def httpPort="8090"
-    
-    environment {
-		dockerhub=credentials('dockerHubAccount')
-	}
+    def dockerhub=credentials('dockerHubAccount')
 
     node(POD_LABEL) {
         
