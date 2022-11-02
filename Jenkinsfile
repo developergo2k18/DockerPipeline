@@ -44,7 +44,7 @@ podTemplate(containers: [
 
         stage('Push to Docker Registry'){
             container('docker') {
-                withCredentials([usernamePassword(credentialsId: 'dockerHubAccount', usernameVariable: $dockerHubUser, passwordVariable: $dockerHubPwd)]) {
+                withCredentials([usernamePassword(credentialsId: 'dockerHubAccount', usernameVariable: "$dockerHubUser", passwordVariable: "$dockerHubPwd")]) {
                     sh "docker login -u $dockerUser -p $dockerPassword"
                     sh "docker tag $containerName:$tag $dockerUser/$containerName:$tag"
                     sh "docker push $dockerUser/$containerName:$tag"
@@ -55,7 +55,7 @@ podTemplate(containers: [
 
 
         stage('Deploy App To Kubernetes Cluster'){
-            kubernetesApply(file: 'DockerPipeline/deploy.yml')
+            kubernetesApply(file: '/home/jenkins/agent/workspace/JavaApp1/DockerPipeline/deploy.yml')
         }
 
     }
