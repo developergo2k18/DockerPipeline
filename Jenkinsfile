@@ -54,7 +54,7 @@ podTemplate(containers: [
 
 
         stage('Deploy App To Kubernetes Cluster'){
-            kubernetesApply(file: '/home/jenkins/agent/workspace/JavaApp1/DockerPipeline/deploy.yml')
+            kubernetesApply(file: '/home/jenkins/agent/workspace/JavaApp1/DockerPipeline/deploy.yml', environment: 'testns')
         }
 
     }
