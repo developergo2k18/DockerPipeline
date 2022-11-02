@@ -21,7 +21,7 @@ podTemplate(containers: [
     def containerName="javaapp"
     def tag="2-11-22-build-1"
     def dockerHubUser="developergo"
-    def dockerHubPwd="Welcome@2022$#"
+    def dockerHubPwd="Welcome@2022$#\"
     def httpPort="8090"
 
     node(POD_LABEL) {
