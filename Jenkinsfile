@@ -28,6 +28,7 @@ podTemplate(containers: [
         stage('Checkout SCM') {
             container('maven') {
                 checkout scm
+                sh "echo pwd"
                 stage('Build a Maven project') {
                     sh "mvn clean package -f /home/jenkins/agent/workspace/deploykube/DockerPipeline/pom.xml"
                 }
