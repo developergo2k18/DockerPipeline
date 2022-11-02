@@ -25,6 +25,11 @@ podTemplate(containers: [
     def httpPort="8090"
 
     node(POD_LABEL) {
+        
+        environment {
+            dockerhub=credentials("dockerHubAccount")
+        }
+        
         stage('Checkout SCM') {
             container('maven') {
                 sh "git clone -b dev https://github.com/developergo2k18/DockerPipeline.git"
@@ -44,12 +49,10 @@ podTemplate(containers: [
 
         stage('Push to Docker Registry'){
             container('docker') {
-                withCredentials([usernamePassword(credentialsId: 'dockerHubAccount', usernameVariable: "$dockerHubUser", passwordVariable: "$dockerHubPwd")]) {
-                    sh "docker login -u $dockerUser -p $dockerPassword"
-                    sh "docker tag $containerName:$tag $dockerUser/$containerName:$tag"
-                    sh "docker push $dockerUser/$containerName:$tag"
-                    echo "Image push complete"
-                }
+                sh "docker login -u $dockerhub_USR -p $dockerhub_PSW"
+                sh "docker tag $containerName:$tag $dockerUser/$containerName:$tag"
+                sh "docker push $dockerUser/$containerName:$tag"
+                echo "Image push complete"
             }
         }
 
