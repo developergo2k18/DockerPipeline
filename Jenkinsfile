@@ -45,7 +45,7 @@ podTemplate(containers: [
 
         stage('Push to Docker Registry'){
             container('docker') {
-		sh "docker login -u $dockerHubUser -p Welcome@2022$\\#"
+		sh "docker login -u $dockerHubUser -p Welcome@2022${'$'}\\#"
                 sh "docker tag $containerName:$tag $dockerHubUser/$containerName:$tag"
                 sh "docker push $dockerHubUser/$containerName:$tag"
                 echo "Image push complete"
