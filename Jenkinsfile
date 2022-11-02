@@ -27,7 +27,7 @@ podTemplate(containers: [
     node(POD_LABEL) {
         stage('Checkout SCM') {
             container('maven') {
-                checkout scm
+                sh "git clone -b dev https://github.com/developergo2k18/DockerPipeline.git"
                 stage('Build a Maven project') {
                     sh "mvn clean package -f /home/jenkins/agent/workspace/JavaApp1/DockerPipeline/pom.xml"
                 }
