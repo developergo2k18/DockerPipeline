@@ -28,7 +28,8 @@ podTemplate(containers: [
         stage('Checkout SCM') {
             container('maven') {
                 checkout scm
-                sh "echo pwd"
+                def workspace = pwd()
+                ${workspace} will now contain an absolute path to job workspace on slave
                 stage('Build a Maven project') {
                     sh "mvn clean package -f /home/jenkins/agent/workspace/deploykube/DockerPipeline/pom.xml"
                 }
