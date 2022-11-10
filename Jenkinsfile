@@ -10,7 +10,7 @@ podTemplate(containers: [
         image: 'docker', 
         command: 'cat', 
         ttyEnabled: true),
-    containerTemplate(name: 'curl', image: 'curlimages/curl', ttyEnabled: true)
+    containerTemplate(name: 'kubectl', image: 'bitnami/kubectl', command: 'sleep 240' ttyEnabled: true)
   ],
   volumes: [
       hostPathVolume(hostPath: '/var/run/docker.sock', 
@@ -55,11 +55,11 @@ podTemplate(containers: [
 
 
         stage('Deploy App To Kubernetes Cluster'){
-		container('curl') {
+		container('kubectl') {
 		  withKubeConfig([credentialsId: 'kubelogin']) {
-		    sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.20.5/bin/linux/amd64/kubectl"'  
-                    sh 'chmod u+x ./kubectl'  
-		    sh './kubectl get pods -n devops-tools'
+// 		    sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.20.5/bin/linux/amd64/kubectl"'  
+//                     sh 'chmod u+x ./kubectl'  
+		    sh 'kubectl get pods -n devops-tools'
 		  }
 		}
         }
