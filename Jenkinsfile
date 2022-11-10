@@ -10,7 +10,7 @@ podTemplate(containers: [
         image: 'docker', 
         command: 'cat', 
         ttyEnabled: true),
-    containerTemplate(name: 'kubectl', image: 'bitnami/kubectl:latest', command: 'sleep', args: '99d', ttyEnabled: true)
+    containerTemplate(name: 'kubectl', image: 'bitnami/kubectl:latest', command: 'cat', ttyEnabled: true)
   ],
   volumes: [
       hostPathVolume(hostPath: '/var/run/docker.sock', 
