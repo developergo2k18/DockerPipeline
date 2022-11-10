@@ -10,7 +10,7 @@ podTemplate(containers: [
         image: 'docker', 
         command: 'cat', 
         ttyEnabled: true),
-    containerTemplate(name: 'jnlp', image: 'jenkins/inbound-agent', args: '${computer.jnlpmac} ${computer.name}', ttyEnabled: true)
+    containerTemplate(name: 'curl', image: 'curlimages/curl', ttyEnabled: true)
   ],
   volumes: [
       hostPathVolume(hostPath: '/var/run/docker.sock', 
@@ -55,7 +55,7 @@ podTemplate(containers: [
 
 
         stage('Deploy App To Kubernetes Cluster'){
-		container('jnlp') {
+		container('curl') {
 		  withKubeConfig([credentialsId: 'kubelogin']) {
 		    sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.20.5/bin/linux/amd64/kubectl"'  
                     sh 'chmod u+x ./kubectl'  
