@@ -10,11 +10,7 @@ podTemplate(containers: [
         image: 'docker', 
         command: 'cat', 
         ttyEnabled: true),
-    containerTemplate(
-      name: 'jnlp',
-      image: 'jenkinsci/jnlp-slave:3.10-1-alpine',
-      args: '${computer.jnlpmac} ${computer.name}'
-    )
+    containerTemplate(name: 'jnlp', image: 'jenkins/inbound-agent:4.7-1', args: '${computer.jnlpmac} ${computer.name}')
   ],
   volumes: [
       hostPathVolume(hostPath: '/var/run/docker.sock', 
@@ -59,7 +55,7 @@ podTemplate(containers: [
 
 
         stage('Deploy App To Kubernetes Cluster'){
-		container('docker') {
+		container('jnlp') {
 		  withKubeConfig([credentialsId: 'kubelogin']) {
 		    //sh 'apk add --no-cache curl'
 		    //sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.20.5/bin/linux/amd64/kubectl"'  
