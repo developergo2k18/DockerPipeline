@@ -10,7 +10,7 @@ podTemplate(containers: [
         image: 'docker', 
         command: 'cat', 
         ttyEnabled: true),
-    containerTemplate(name: 'jnlp', image: 'jenkins/inbound-agent:4.7-1', args: '${computer.jnlpmac} ${computer.name}')
+    containerTemplate(name: 'jnlp', image: 'jenkins/inbound-agent', args: '${computer.jnlpmac} ${computer.name}', ttyEnabled: true)
   ],
   volumes: [
       hostPathVolume(hostPath: '/var/run/docker.sock', 
