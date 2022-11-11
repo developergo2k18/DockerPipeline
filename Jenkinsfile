@@ -17,8 +17,8 @@ podTemplate(yaml: '''
             command:
             - cat
             tty: true
-#             securityContext:
-#               privileged: true
+            securityContext:
+              privileged: true
           - name: docker
             image: docker
             tty: true
