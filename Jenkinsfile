@@ -13,12 +13,12 @@ podTemplate(yaml: '''
 #             securityContext:
 #               privileged: true
           - name: kubectl
-            image: bitnami/kubectl:1.24.6
+            image: lachlanevenson/k8s-kubectl:v1.8.8
             command:
             - cat
             tty: true
-            securityContext:
-              privileged: true
+#            securityContext:
+#              privileged: true
           - name: docker
             image: docker
             tty: true
@@ -40,6 +40,12 @@ podTemplate(yaml: '''
     def httpPort="8090"
 
     node(POD_LABEL) {
+	    
+	stage('Deploy App To Kubernetes Cluster Test'){
+		container('kubectl') {
+		    sh 'kubectl version'
+		  }
+        }
         
         stage('Checkout SCM') {
             container('maven') {
