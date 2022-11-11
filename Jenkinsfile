@@ -13,7 +13,7 @@ podTemplate(yaml: '''
 #             securityContext:
 #               privileged: true
           - name: kubectl
-            image: bitnami/kubectl:latest
+            image: rancher/kubectl
             command:
             - cat
             tty: true
