@@ -2,28 +2,28 @@ podTemplate(yaml: '''
         apiVersion: v1
         kind: Pod
         spec:
-          securityContext:
-            runAsUser: 1000
+//           securityContext:
+//             runAsUser: 1000
           containers:
           - name: maven
             image: maven:3.8.1-jdk-8
             command:
             - cat
             tty: true
-            securityContext:
-              privileged: true
+//             securityContext:
+//               privileged: true
           - name: kubectl
             image: bitnami/kubectl:latest
             command:
             - cat
             tty: true
-            securityContext:
-              privileged: true
+//             securityContext:
+//               privileged: true
           - name: docker
             image: docker
             tty: true
-            securityContext:
-              privileged: true
+//             securityContext:
+//               privileged: true
             volumeMounts:
               - name: dockersock
                 mountPath: "/var/run/docker.sock"
