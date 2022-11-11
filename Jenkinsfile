@@ -1,32 +1,29 @@
 podTemplate(yaml: '''
---- 
-apiVersion: v1
-kind: Pod
-spec: 
-  containers: 
-    - 
-      command: 
-        - cat
-      image: "maven:3.8.1-jdk-8"
-      name: maven
-      ttyEnabled: 
-        - true
-    - 
-      command: 
-        - cat
-      image: docker
-      name: docker
-      ttyEnabled: 
-        - true
-    - 
-      command: 
-        - cat
-      image: "bitnami/kubectl:latest"
-      name: kubectl
-      ttyEnabled: 
-        - true
-  securityContext: 
-    runAsUser: 1000
+        apiVersion: v1
+        kind: Pod
+        spec:
+          securityContext:
+            runAsUser: 1000
+          containers:
+          - name: maven
+            image: maven:3.8.1-jdk-8
+            command:
+            - cat
+            tty: true
+            securityContext:
+              privileged: true
+          - name: kubectl
+            image: bitnami/kubectl:latest
+            command:
+            - cat
+            tty: true
+            securityContext:
+              privileged: true
+          - name: docker
+            image: docker:dind
+            tty: true
+            securityContext:
+              privileged: true
 ''') {
 
     def containerName="javaapp"
