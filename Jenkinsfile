@@ -40,12 +40,6 @@ podTemplate(yaml: '''
     def httpPort="8090"
 
     node(POD_LABEL) {
-	    
-	stage('Deploy App To Kubernetes Cluster Test'){
-		container('kubectl') {
-		    sh 'kubectl version'
-		  }
-        }
         
         stage('Checkout SCM') {
             container('maven') {
@@ -76,13 +70,11 @@ podTemplate(yaml: '''
 
         stage('Deploy App To Kubernetes Cluster'){
 		container('kubectl') {
-// 		  withKubeConfig([credentialsId: 'kubelogin']) {
-// 		    sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.20.5/bin/linux/amd64/kubectl"'  
-//                     sh 'chmod u+x ./kubectl'  
-// 		    sh 'kubectl get pods -n devops-tools'
+		  withKubeConfig([credentialsId: 'kubelogin']) {
+		    sh 'kubectl get pods -n devops-tools'
 	            sh 'kubectl version'
 		  }
-// 		}
+		}
         }
 
     }
