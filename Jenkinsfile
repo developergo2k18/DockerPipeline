@@ -20,7 +20,7 @@ podTemplate(yaml: '''
             securityContext:
               privileged: true
           - name: docker
-            image: docker:dind
+            image: docker
             tty: true
             securityContext:
               privileged: true
