@@ -24,6 +24,9 @@ podTemplate(yaml: '''
             tty: true
             securityContext:
               privileged: true
+	    volumes:
+              - /var/jenkins_home
+              - /var/run/docker.sock:/var/run/docker.sock
 ''') {
 
     def containerName="javaapp"
