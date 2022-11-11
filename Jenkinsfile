@@ -1,23 +1,33 @@
-podTemplate(containers: [
-    containerTemplate(
-        name: 'maven', 
-        image: 'maven:3.8.1-jdk-8', 
-        command: 'cat',
-        ttyEnabled: true
-        ),
-    containerTemplate(
-        name: 'docker', 
-        image: 'docker', 
-        command: 'cat', 
-        ttyEnabled: true),
-    containerTemplate(name: 'kubectl', image: 'bitnami/kubectl:latest', command: 'cat', ttyEnabled: true)
-  ],
-  volumes: [
-      hostPathVolume(hostPath: '/var/run/docker.sock', 
-                     mountPath: '/var/run/docker.sock'),
-      hostPathVolume(hostPath: '/home/docker/repository', 
-                     mountPath: '/root/.m2/repository'),
-  ]) {
+podTemplate(yaml: '''
+--- 
+apiVersion: v1
+kind: Pod
+spec: 
+  containers: 
+    - 
+      command: 
+        - cat
+      image: "maven:3.8.1-jdk-8"
+      name: maven
+      ttyEnabled: 
+        - true
+    - 
+      command: 
+        - cat
+      image: docker
+      name: docker
+      ttyEnabled: 
+        - true
+    - 
+      command: 
+        - cat
+      image: "bitnami/kubectl:latest"
+      name: kubectl
+      ttyEnabled: 
+        - true
+  securityContext: 
+    runAsUser: 1000
+''') {
 
     def containerName="javaapp"
     def tag="2-11-22-build-1"
