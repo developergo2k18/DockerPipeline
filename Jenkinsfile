@@ -24,8 +24,13 @@ podTemplate(yaml: '''
             tty: true
             securityContext:
               privileged: true
-          volumes:
-            - "/var/run/docker.sock:/var/run/docker.sock"
+	    volumeMounts:
+	      - name: dockersock
+	        mountPath: "/var/run/docker.sock"
+	  volumes:
+	  - name: dockersock
+	    hostPath:
+	      path: /var/run/docker.sock  
 ''') {
 
     def containerName="javaapp"
