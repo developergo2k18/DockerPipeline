@@ -73,7 +73,7 @@ podTemplate(yaml: '''
 	          sh 'echo $KUBECONFIG'
                   sh 'cat $KUBECONFIG'
 		  container('kubectl') {
-		    sh 'kubectl get pods -n devops-tools'
+		    sh 'kubectl get ns'
 	            sh 'kubectl version'
 		  }
 		}
