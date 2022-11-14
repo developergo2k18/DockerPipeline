@@ -41,7 +41,6 @@ podTemplate(yaml: '''
 
     node(POD_LABEL) {
 	    
-	     stages {
         
 //         stage('Checkout SCM') {
 //             container('maven') {
@@ -61,26 +60,13 @@ podTemplate(yaml: '''
 //         }
 
         stage('Push to Docker Registry'){
-	    environment {
-		dockerhub='dockerHubAccount'
-	    }
-		
-		steps{
-			script{
-				
-				docker.withRegistry('https://registry.hub.docker.com', dockerhub) {
-					container('docker') {
-				// 		sh "docker login -u $dockerHubUser -p Welcome@2022${'$'}\\#"
+		container('docker') {
+			sh "echo Welcome@2022${'$'}\\# | docker login -u $dockerHubUser --password-stdin"
 
-						sh "docker tag $containerName:$tag $dockerHubUser/$containerName:$tag"
-						sh "docker push $dockerHubUser/$containerName:$tag"
-						echo "Image push complete"
-					}
-				}
-			}
+			sh "docker tag $containerName:$tag $dockerHubUser/$containerName:$tag"
+			sh "docker push $dockerHubUser/$containerName:$tag"
+			echo "Image push complete"
 		}
-		
-
         }
 
 
@@ -96,8 +82,6 @@ podTemplate(yaml: '''
 // 		  }
 // 		}
 //         }
-		     
-	     }
 
     }
 }
