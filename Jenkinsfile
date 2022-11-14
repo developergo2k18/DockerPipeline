@@ -13,7 +13,7 @@ podTemplate(yaml: '''
 #             securityContext:
 #               privileged: true
           - name: kubectl
-            image: lachlanevenson/k8s-kubectl:1.25.0
+            image: lachlanevenson/k8s-kubectl:v1.25.0
             command:
             - cat
             tty: true
