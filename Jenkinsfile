@@ -40,46 +40,51 @@ podTemplate(yaml: '''
     def httpPort="8090"
 
     node(POD_LABEL) {
+	    
+	    environment {
+		dockerhub=credentials('dockerHubAccount')
+	    }
         
-//         stage('Checkout SCM') {
-//             container('maven') {
-//                 sh "git clone -b dev https://github.com/developergo2k18/DockerPipeline.git"
-//                 stage('Build a Maven project') {
-//                     sh "mvn clean package -f /home/jenkins/agent/workspace/JavaApp1/DockerPipeline/pom.xml"
-//                 }
-//             }
-//         }
-
-//         stage('Image Build') {
-//             container('docker') {
-//                 sh "docker system prune -f"
-//                 docker.build("$containerName:$tag","/home/jenkins/agent/workspace/JavaApp1/DockerPipeline")
-//                 echo "Image build complete"
-//             }
-//         }
-
-//         stage('Push to Docker Registry'){
-//             container('docker') {
-// 		sh "docker login -u $dockerHubUser -p Welcome@2022${'$'}\\#"
-//                 sh "docker tag $containerName:$tag $dockerHubUser/$containerName:$tag"
-//                 sh "docker push $dockerHubUser/$containerName:$tag"
-//                 echo "Image push complete"
-//             }
-//         }
-
-
-        stage('Deploy App To Kubernetes Cluster'){
-		withKubeConfig([credentialsId: 'kubelogin']) {
-	          sh 'echo $KUBECONFIG'
-                  //sh 'cat $KUBECONFIG > config'
-	          //sh 'cat config'
-		  container('kubectl') {
-	            //sh 'kubectl --kubeconfig /home/jenkins/agent/workspace/JavaApp1/config cluster-info'
-		    sh 'kubectl get ns'
-	            sh 'kubectl version'
-		  }
-		}
+        stage('Checkout SCM') {
+            container('maven') {
+                sh "git clone -b dev https://github.com/developergo2k18/DockerPipeline.git"
+                stage('Build a Maven project') {
+                    sh "mvn clean package -f /home/jenkins/agent/workspace/JavaApp1/DockerPipeline/pom.xml"
+                }
+            }
         }
+
+        stage('Image Build') {
+            container('docker') {
+                sh "docker system prune -f"
+                docker.build("$containerName:$tag","/home/jenkins/agent/workspace/JavaApp1/DockerPipeline")
+                echo "Image build complete"
+            }
+        }
+
+        stage('Push to Docker Registry'){
+            container('docker') {
+// 		sh "docker login -u $dockerHubUser -p Welcome@2022${'$'}\\#"
+		sh "echo $dockerhub_PSW | docker login -u $dockerhub_USR --password-stdin"
+                sh "docker tag $containerName:$tag $dockerHubUser/$containerName:$tag"
+                sh "docker push $dockerHubUser/$containerName:$tag"
+                echo "Image push complete"
+            }
+        }
+
+
+//         stage('Deploy App To Kubernetes Cluster'){
+// 		withKubeConfig([credentialsId: 'kubelogin']) {
+// 	          sh 'echo $KUBECONFIG'
+//                   //sh 'cat $KUBECONFIG > config'
+// 	          //sh 'cat config'
+// 		  container('kubectl') {
+// 	            //sh 'kubectl --kubeconfig /home/jenkins/agent/workspace/JavaApp1/config cluster-info'
+// 		    sh 'kubectl get ns'
+// 	            sh 'kubectl version'
+// 		  }
+// 		}
+//         }
 
     }
 }
