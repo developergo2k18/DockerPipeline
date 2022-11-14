@@ -13,7 +13,7 @@ podTemplate(yaml: '''
 #             securityContext:
 #               privileged: true
           - name: kubectl
-            image: lachlanevenson/k8s-kubectl:v1.8.8
+            image: atlassian/pipelines-kubectl:1.24.2
             command:
             - cat
             tty: true
