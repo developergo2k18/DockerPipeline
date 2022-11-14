@@ -72,9 +72,9 @@ podTemplate(yaml: '''
 		withKubeConfig([credentialsId: 'kubelogin']) {
 	          sh 'echo $KUBECONFIG'
                   sh 'cat $KUBECONFIG > config'
-	          sh 'pwd'
+	          sh 'cat config'
 		  container('kubectl') {
-	            sh 'kubectl --kubeconfig ./config cluster-info'
+	            sh 'kubectl --kubeconfig /home/jenkins/agent/workspace/JavaApp1/config cluster-info'
 		    sh 'kubectl get ns'
 	            sh 'kubectl version'
 		  }
