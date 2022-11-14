@@ -64,7 +64,7 @@ podTemplate(yaml: '''
 	    }
 		
 		steps{
-			scripts{
+			script{
 				
 				docker.withRegistry('https://registry.hub.docker.com', dockerhub) {
 					container('docker') {
