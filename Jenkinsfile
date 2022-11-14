@@ -71,10 +71,10 @@ podTemplate(yaml: '''
         stage('Deploy App To Kubernetes Cluster'){
 		withKubeConfig([credentialsId: 'kubelogin']) {
 	          sh 'echo $KUBECONFIG'
-                  sh 'cat $KUBECONFIG > config'
-	          sh 'cat config'
+                  //sh 'cat $KUBECONFIG > config'
+	          //sh 'cat config'
 		  container('kubectl') {
-	            sh 'kubectl --kubeconfig /home/jenkins/agent/workspace/JavaApp1/config cluster-info'
+	            //sh 'kubectl --kubeconfig /home/jenkins/agent/workspace/JavaApp1/config cluster-info'
 		    sh 'kubectl get ns'
 	            sh 'kubectl version'
 		  }
