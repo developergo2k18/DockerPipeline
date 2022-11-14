@@ -71,8 +71,10 @@ podTemplate(yaml: '''
         stage('Deploy App To Kubernetes Cluster'){
 		withKubeConfig([credentialsId: 'kubelogin']) {
 	          sh 'echo $KUBECONFIG'
-                  sh 'cat $KUBECONFIG'
+                  sh 'cat $KUBECONFIG > config'
+	          sh 'pwd'
 		  container('kubectl') {
+	            sh 'kubectl --kubeconfig ./config cluster-info'
 		    sh 'kubectl get ns'
 	            sh 'kubectl version'
 		  }
