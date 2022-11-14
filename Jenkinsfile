@@ -40,10 +40,6 @@ podTemplate(yaml: '''
     def httpPort="8090"
 
     node(POD_LABEL) {
-	    
-	    environment {
-		dockerhub=credentials('dockerHubAccount')
-	    }
         
         stage('Checkout SCM') {
             container('maven') {
@@ -63,13 +59,19 @@ podTemplate(yaml: '''
         }
 
         stage('Push to Docker Registry'){
-            container('docker') {
-// 		sh "docker login -u $dockerHubUser -p Welcome@2022${'$'}\\#"
-		sh "echo $dockerhub_PSW | docker login -u $dockerhub_USR --password-stdin"
-                sh "docker tag $containerName:$tag $dockerHubUser/$containerName:$tag"
-                sh "docker push $dockerHubUser/$containerName:$tag"
-                echo "Image push complete"
-            }
+	    environment {
+		dockerhub='dockerHubAccount'
+	    }
+		docker.withRegistry('https://registry.hub.docker.com', dockerhub) {
+			container('docker') {
+		// 		sh "docker login -u $dockerHubUser -p Welcome@2022${'$'}\\#"
+
+				sh "docker tag $containerName:$tag $dockerHubUser/$containerName:$tag"
+				sh "docker push $dockerHubUser/$containerName:$tag"
+				echo "Image push complete"
+			}
+		}
+
         }
 
 
