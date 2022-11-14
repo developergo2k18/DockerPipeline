@@ -40,6 +40,8 @@ podTemplate(yaml: '''
     def httpPort="8090"
 
     node(POD_LABEL) {
+	    
+	     stages {
         
 //         stage('Checkout SCM') {
 //             container('maven') {
@@ -94,6 +96,8 @@ podTemplate(yaml: '''
 // 		  }
 // 		}
 //         }
+		     
+	     }
 
     }
 }
