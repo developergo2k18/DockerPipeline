@@ -74,12 +74,12 @@ podTemplate(yaml: '''
 	          sh 'echo $KUBECONFIG'
                   //sh 'cat $KUBECONFIG > config'
 	          //sh 'cat config'
-// 		  container('kubectl') {
-// 	            //sh 'kubectl --kubeconfig /home/jenkins/agent/workspace/JavaApp1/config cluster-info'
-// 		    //sh 'kubectl apply -f /home/jenkins/agent/workspace/JavaApp1/DockerPipeline/deployment.azure.yaml -n testnamespace'
-// 		    sh 'kubectl get ns'
-// 	            sh 'kubectl get pods -n devops-tools'
-// 		  }
+		  container('kubectl') {
+	            //sh 'kubectl --kubeconfig /home/jenkins/agent/workspace/JavaApp1/config cluster-info'
+		    //sh 'kubectl apply -f /home/jenkins/agent/workspace/JavaApp1/DockerPipeline/deployment.azure.yaml -n testnamespace'
+		    sh 'kubectl get ns'
+	            sh 'kubectl get pods -n devops-tools'
+		  }
 		}
         }
 
